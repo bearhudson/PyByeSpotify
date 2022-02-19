@@ -3,4 +3,4 @@
 Bulk Export your Spotify playlists to CSV files. 
 
 ----
-2022 GNU GPL-3.0-or-later
+Apache 2.0
