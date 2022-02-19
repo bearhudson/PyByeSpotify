@@ -14,7 +14,7 @@ def main():
     user = LoginClass()
     user.get_access_token()
     user.get_playlists()
-
+    #TODO get playlists content
 
 if __name__ == "__main__":
     main()

@@ -38,5 +38,5 @@ class LoginClass:
     def get_playlist_tracks(self, playlist_id):
         playlist_content_url = API_ENDPOINT + '/playlists/' + playlist_id
         self.playlist_content = requests.get(playlist_content_url, headers=self.headers)
-        self.playlist_response_json = self.playlist_response.json()
-        return self.playlist_response_json
+        self.playlist_content_json = self.playlist_content.json()
+        return self.playlist_content_json
