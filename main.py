@@ -13,8 +13,13 @@ from login import LoginClass
 def main():
     user = LoginClass()
     user.get_access_token()
-    user.get_playlists()
-    #TODO get playlists content
+    user_playlists = user.get_playlists()
+    playlist_content = user_playlists['items']
+    for item in playlist_content:
+        print(item['id'] + " " + item['name'])
+        # tracks = user.get_playlist_tracks(item['id'])
+        # print(tracks)
+
 
 if __name__ == "__main__":
     main()
