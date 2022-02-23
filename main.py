@@ -8,17 +8,20 @@ import os
 import getpass
 from environs import *
 from login import LoginClass
+from trackclass import TrackClass
 
 
 def main():
     user = LoginClass()
-    user.get_access_token()
-    user_playlists = user.get_playlists(playlist_limit="50", offset="0")
+    user_name_info = user.get_user_info()
+    user_name = user_name_info['display_name']
+    print(f"\nPlaylists for user: {user_name}")
+    user_playlists = user.get_playlists(playlist_limit="4", offset="0")
     playlist_content = user_playlists['items']
+    # TODO: get more than 20 playlists
     for pl_item in playlist_content:
         track_count_slice = pl_item['tracks']
         track_count = track_count_slice['total']
-        tracks_slice = []
         if track_count <= 20:
             tracks_slice = user.get_playlist_tracks(pl_item['id'])
         elif 20 < track_count <= 50:
@@ -27,22 +30,24 @@ def main():
             track_c_remaining = track_count
             while track_c_remaining > 0:
                 tracks_slice.append(user.get_playlist_tracks(pl_item['id'], track_limit=str(track_c_remaining)))
+        # TODO: create list of tracks with trackclass
         print(f"\nPlaylist ID: {pl_item['id']} -- Name: {pl_item['name']} -- Track Count: {track_count}")
         tracks = tracks_slice['items']
         for track in tracks:
-            track_slice = track['track']
             artist_list = []
+            track_slice = track['track']
             artist_slice = track_slice['artists']
+            # TODO: add track data to trackclass
             if len(artist_slice) >= 1:
                 for artist in artist_slice:
                     artist_list.append(artist['name'])
             else:
                 artist_list.append(track_slice['artists'])
             if track_slice['album']['album_type'] == 'single':
-                print(f"{artist_list} - {track_slice['name']} [{track_slice['album']['release_date']}]")
+                print(f"{artist_list} - {track_slice['name']} ({track_slice['album']['release_date']})")
             else:
                 track_album = track_slice['album']['name']
-                print(f"{artist_list} - {track_slice['name']} [{track_album} {track_slice['album']['release_date']}]")
+                print(f"{artist_list} - {track_slice['name']} ({track_album} {track_slice['album']['release_date']})")
             artist_list.clear()
 
 

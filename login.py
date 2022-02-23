@@ -1,14 +1,14 @@
 import requests
 from environs import *
 
-AUTH_URL = 'https://accounts.spotify.com/api/token'
+AUTH_ENDPOINT = 'https://accounts.spotify.com/api/token'
 API_ENDPOINT = 'https://api.spotify.com/v1'
 
 
 class LoginClass:
 
     def __init__(self):
-        auth_response = requests.post(AUTH_URL, {
+        auth_response = requests.post(AUTH_ENDPOINT, {
             'grant_type': 'client_credentials',
             'client_id': CLIENT_ID,
             'client_secret': CLIENT_SECRET
@@ -27,13 +27,9 @@ class LoginClass:
         user_request_url = API_ENDPOINT + '/users/' + USER_ID
         self.user_info_request = requests.get(user_request_url, headers=self.headers)
         self.user_info_request_json = self.user_info_request.json()
-        return self.playlist_response_json
+        return self.user_info_request_json
 
     def get_playlists(self, playlist_limit="20", offset="0"):
-        self.headers = {
-            'Authorization': f'Bearer {self.access_token}',
-            'Content-Type': 'application/json'
-        }
         self.params = {
             'limit': playlist_limit,
             'offset': offset
@@ -44,12 +40,6 @@ class LoginClass:
         return self.playlist_response_json
 
     def get_playlist_tracks(self, playlist_id, track_limit="20", offset="0"):
-        self.headers = {
-            'Authorization': f'Bearer {self.access_token}',
-            'Content-Type': 'application/json',
-            'limit': track_limit,
-            'offset': offset
-        }
         self.params = {
             'limit': track_limit,
             'offset': offset
