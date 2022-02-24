@@ -13,6 +13,7 @@ from trackclass import TrackClass
 
 def main():
     user = LoginClass()
+    track_list = []
     user_name_info = user.get_user_info()
     user_name = user_name_info['display_name']
     print(f"\nPlaylists for user: {user_name}")
@@ -37,17 +38,29 @@ def main():
             artist_list = []
             track_slice = track['track']
             artist_slice = track_slice['artists']
-            # TODO: add track data to trackclass
             if len(artist_slice) >= 1:
                 for artist in artist_slice:
                     artist_list.append(artist['name'])
             else:
                 artist_list.append(track_slice['artists'])
+            # TODO: add track data to trackclass
             if track_slice['album']['album_type'] == 'single':
-                print(f"{artist_list} - {track_slice['name']} ({track_slice['album']['release_date']})")
+                # print(f"{artist_list} - {track_slice['name']} ({track_slice['album']['release_date']})")
+                track_list.append(TrackClass(name=track_slice['name'],
+                                             artist=artist_list,
+                                             release=track_slice['album']['release_date'],
+                                             album="",
+                                             is_single=True))
+                print('single')
+                print(track_list[0].return_details())
             else:
                 track_album = track_slice['album']['name']
-                print(f"{artist_list} - {track_slice['name']} ({track_album} {track_slice['album']['release_date']})")
+                # print(f"{artist_list} - {track_slice['name']} ({track_album} {track_slice['album']['release_date']})")
+                track_list.append(TrackClass(name=track_slice['name'],
+                                             artist=artist_list,
+                                             release=track_slice['album']['release_date'],
+                                             album=track_slice['album']['name'],
+                                             is_single=True))
             artist_list.clear()
 
 

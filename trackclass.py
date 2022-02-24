@@ -6,9 +6,12 @@ from datetime import datetime
 class TrackClass:
     name: str
     artist: list
-    album: str
     release: datetime
     is_single: bool = True
+    album: str = ""
 
     def return_details(self):
-        return self.name, self.artist, self.release, self.is_single
+        if self.is_single:
+            return self.artist, self.name, self.album, self.release, self.is_single
+        elif not self.is_single:
+            return self.artist, self.name, self.release, self.is_single
