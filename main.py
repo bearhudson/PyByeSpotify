@@ -12,9 +12,9 @@ from trackclass import TrackClass
 
 
 def main():
+    global tracks_slice
     user = LoginClass()
     track_list = []
-    tracks_slice = []
     user_name_info = user.get_user_info()
     user_name = user_name_info['display_name']
     print(f"\nPlaylists for user: {user_name}")
@@ -31,7 +31,7 @@ def main():
         elif track_count > 50:
             track_c_remaining = track_count
             while track_c_remaining > 0:
-                tracks_slice.append(user.get_playlist_tracks(pl_item['id'], track_limit=str(track_c_remaining)))
+                tracks_slice = user.get_playlist_tracks(pl_item['id'], track_limit=str(track_c_remaining))
         print(f"\nPlaylist ID: {pl_item['id']} -- Name: {pl_item['name']} -- Track Count: {track_count}")
         tracks = tracks_slice['items']
         for track in tracks:
