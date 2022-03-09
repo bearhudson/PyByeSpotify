@@ -18,9 +18,9 @@ def main():
     user_name_info = user.get_user_info()
     user_name = user_name_info['display_name']
     print(f"\nPlaylists for user: {user_name}")
-    user_playlists = user.get_playlists(playlist_limit="4", offset="0")
+    user_playlists = user.get_playlists(playlist_limit="2", offset="0")
     playlist_content = user_playlists['items']
-    # TODO: get more than 20 playlists
+    # TODO: use recursion to get the full playlist track listing
     for pl_item in playlist_content:
         track_count_slice = pl_item['tracks']
         track_count = track_count_slice['total']
@@ -59,7 +59,6 @@ def main():
                                              album=track_slice['album']['name'],
                                              is_single=False))
                 print(track_list[len(track_list)-1].return_details())
-            artist_list.clear()
 
 
 if __name__ == "__main__":

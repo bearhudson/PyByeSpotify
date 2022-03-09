@@ -37,6 +37,7 @@ class LoginClass:
         playlist_request_url = API_ENDPOINT + '/users/' + USER_ID + '/playlists'
         self.playlist_response = requests.get(playlist_request_url, headers=self.headers, params=self.params)
         self.playlist_response_json = self.playlist_response.json()
+        print (self.playlist_response_json)
         return self.playlist_response_json
 
     def get_playlist_tracks(self, playlist_id, track_limit="20", offset="0"):
