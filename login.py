@@ -1,5 +1,6 @@
 import requests
 from environs import *
+from userclass import UserClass
 
 AUTH_ENDPOINT = 'https://accounts.spotify.com/api/token'
 API_ENDPOINT = 'https://api.spotify.com/v1'
@@ -26,6 +27,8 @@ class LoginClass:
     def get_user_info(self):
         user_request_url = API_ENDPOINT + '/users/' + USER_ID
         self.user_info_request = requests.get(user_request_url, headers=self.headers)
+        self.user_class = UserClass(self.user_info_request.json())
+        print(self.user_info_request.text)
         self.user_info_request_json = self.user_info_request.json()
         return self.user_info_request_json
 
@@ -37,7 +40,7 @@ class LoginClass:
         playlist_request_url = API_ENDPOINT + '/users/' + USER_ID + '/playlists'
         self.playlist_response = requests.get(playlist_request_url, headers=self.headers, params=self.params)
         self.playlist_response_json = self.playlist_response.json()
-        print (self.playlist_response_json)
+        print(self.playlist_response)
         return self.playlist_response_json
 
     def get_playlist_tracks(self, playlist_id, track_limit="20", offset="0"):
