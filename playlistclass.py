@@ -53,7 +53,7 @@ class PlaylistClass(BaseModel):
     href: str
     items: List[Item]
     limit: int
-    next: str
+    next: Optional[str]
     offset: int
     previous: Any
     total: int
