@@ -10,17 +10,15 @@ You need to create a Spotify Developer account to get access to your Client ID a
 
 #### Required Environment Variables
 
-
 [Spotify API](https://developer.spotify.com/documentation/web-api/)
-
 
 * CLIENT_ID
 * CLIENT_SECRET
 * USER_ID -- _Username whose playlist you wish to extract._
 
-```bash
-export CLIENT_ID="XXXXX"; export CLIENT_SECRET="YYYYY"; export USER_ID="ZZZZZ"; ./main.py
+#### To export and run
+```bash 
+Linux_Shell$ export CLIENT_ID="XXXXX"; export CLIENT_SECRET="YYYYY"; export USER_ID="ZZZZZ"; ./main.py
 ```
-
 ----
 Apache 2.0
