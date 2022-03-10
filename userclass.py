@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Any, List, Optional
 from pydantic import BaseModel
+import ujson
 
 
 class ExternalUrls(BaseModel):
@@ -27,3 +28,7 @@ class UserClass(BaseModel):
     images: List[Image]
     type: str
     uri: str
+
+    class Config:
+        json_loads = ujson.loads
+
