@@ -38,9 +38,10 @@ def main():
             artist_list = []
             for artist in cur_track.track.artists:
                 artist_list.append(artist.name)
-            track_name = cur_track.track.name
-            album_name = cur_track.track.album.name
-            print(f"{artist_list} - {album_name} - {track_name}")
+            print(f"{artist_list} - "
+                  f"{cur_track.track.name} - "
+                  f"{cur_track.track.album.name} - "
+                  f"{cur_track.track.album.release_date}")
 
 
 if __name__ == "__main__":
