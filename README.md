@@ -2,6 +2,8 @@
 
 ### Bulk Export your public Spotify playlists to CSV files. 
 
+Well, eventually. Right now we're just writing to the terminal. 
+
 You need to create a Spotify Developer account to get access to your Client ID and Client Secret from the Web API.
 
 * [Go here](https://developer.spotify.com/dashboard/) to start your developer account creation. 
