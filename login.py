@@ -1,6 +1,8 @@
 import requests
 from environs import *
 from userclass import UserClass
+from playlistclass import PlaylistClass
+from trackclass import TrackClass
 
 AUTH_ENDPOINT = 'https://accounts.spotify.com/api/token'
 API_ENDPOINT = 'https://api.spotify.com/v1'
@@ -20,17 +22,16 @@ class LoginClass:
             'Authorization': f'Bearer {self.access_token}',
             'Content-Type': 'application/json',
         }
+        self.get_user_name()
 
     def get_access_token(self):
         return self.access_token
 
-    def get_user_info(self):
+    def get_user_name(self):
         user_request_url = API_ENDPOINT + '/users/' + USER_ID
         self.user_info_request = requests.get(user_request_url, headers=self.headers)
-        self.user_class = UserClass(self.user_info_request.json())
-        print(self.user_info_request.text)
+        self.user_class = UserClass.parse_raw(self.user_info_request.text)
         self.user_info_request_json = self.user_info_request.json()
-        return self.user_info_request_json
 
     def get_playlists(self, playlist_limit="20", offset="0"):
         self.params = {
@@ -39,9 +40,8 @@ class LoginClass:
         }
         playlist_request_url = API_ENDPOINT + '/users/' + USER_ID + '/playlists'
         self.playlist_response = requests.get(playlist_request_url, headers=self.headers, params=self.params)
-        self.playlist_response_json = self.playlist_response.json()
-        print(self.playlist_response)
-        return self.playlist_response_json
+        self.playlist_class = PlaylistClass.parse_raw(self.playlist_response.text)
+        return self.playlist_class.items
 
     def get_playlist_tracks(self, playlist_id, track_limit="20", offset="0"):
         self.params = {
@@ -50,5 +50,5 @@ class LoginClass:
         }
         playlist_content_url = API_ENDPOINT + '/playlists/' + playlist_id + '/tracks'
         self.playlist_content = requests.get(playlist_content_url, headers=self.headers, params=self.params)
-        self.playlist_content_json = self.playlist_content.json()
-        return self.playlist_content_json
+        self.track_object = TrackClass.parse_raw(self.playlist_content.text)
+        return self.track_object.items
