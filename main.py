@@ -5,16 +5,17 @@ def get_playlists_recursive(count, reps, user, playlists):
     try:
         if count > 20:
             get_playlists_recursive(count - 20, reps + 1, user, playlists)
-        playlists += user.get_playlists(playlist_limit=count, offset=(reps * 20))
+        playlists += user.get_playlists(playlist_limit=20, offset=(reps * 50))
     except ValueError:
         print("Error")
     return playlists
+
 
 def get_tracks_recursive(count, reps, user, playlist_id, track_slice):
     try:
         if count > 50:
             get_tracks_recursive(count - 50, reps + 1, user, playlist_id, track_slice)
-        track_slice += user.get_playlist_tracks(playlist_id=playlist_id, track_limit=count, offset=(reps * 50))
+        track_slice += user.get_playlist_tracks(playlist_id=playlist_id, track_limit=50, offset=(reps * 50))
     except ValueError:
         print("Error")
     return track_slice
