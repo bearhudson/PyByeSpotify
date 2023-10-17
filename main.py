@@ -4,6 +4,7 @@ from login import LoginClass
 from ytmusicapi import YTMusic
 from time import sleep
 
+
 def get_playlists_recursive(count, reps, user, playlists):
     try:
         if count > 20:
@@ -25,13 +26,15 @@ def get_tracks_recursive(count, reps, user, playlist_id, track_slice):
 
 
 def main():
-    user = LoginClass()
+    spotify_user = input("Enter Username: ")
+    start_position = int(input("Enter start position[0]: " or 0))
+    user = LoginClass(user_name=f"{spotify_user}")
     yt = YTMusic('oauth.json')
     user_name = user.user_class.display_name
     print(f"\nPlaylists for user: {user_name}\n---")
     playlists = []
     user_playlists = get_playlists_recursive(50, 0, user, playlists)
-    for pl_item in user_playlists:
+    for pl_item in user_playlists[start_position:]:
         track_slice = []
         track_count = pl_item.tracks.total
         track_slice = get_tracks_recursive(track_count, 0, user, playlist_id=pl_item.id, track_slice=track_slice)
@@ -51,8 +54,7 @@ def main():
             except KeyError:
                 yt.add_playlist_items(playlistId, [search_results[1]['videoId']])
             print(search_results)
-            sleep(5)
-
+            sleep(10)
 
 
 if __name__ == "__main__":
