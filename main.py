@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
 from login import LoginClass
-
+from ytmusicapi import YTMusic
+from time import sleep
 
 def get_playlists_recursive(count, reps, user, playlists):
     try:
@@ -25,6 +26,7 @@ def get_tracks_recursive(count, reps, user, playlist_id, track_slice):
 
 def main():
     user = LoginClass()
+    yt = YTMusic('oauth.json')
     user_name = user.user_class.display_name
     print(f"\nPlaylists for user: {user_name}\n---")
     playlists = []
@@ -34,6 +36,7 @@ def main():
         track_count = pl_item.tracks.total
         track_slice = get_tracks_recursive(track_count, 0, user, playlist_id=pl_item.id, track_slice=track_slice)
         print(f"\nPlaylist Name: {pl_item.name} -- Track Count: {track_count}\n---")
+        playlistId = yt.create_playlist(f'{pl_item.name}', f'{pl_item.name} Imported from Spotify')
         for cur_track in track_slice:
             artist_list = []
             for artist in cur_track.track.artists:
@@ -42,6 +45,14 @@ def main():
                   f"{cur_track.track.name} - "
                   f"{cur_track.track.album.name} - "
                   f"{cur_track.track.album.release_date}")
+            search_results = yt.search(f"{artist_list} {cur_track.track.name} {cur_track.track.album.name}")
+            try:
+                yt.add_playlist_items(playlistId, [search_results[0]['videoId']])
+            except KeyError:
+                yt.add_playlist_items(playlistId, [search_results[1]['videoId']])
+            print(search_results)
+            sleep(5)
+
 
 
 if __name__ == "__main__":
