@@ -57,7 +57,7 @@ def main():
         if google_import_bool:
             playlistId = yt.create_playlist(
                 f'{pl_item.name}',
-                f'{pl_item.name} Imported from Spotify with love <3 from Aniki! ;)')
+                f'{pl_item.name} - Imported from Spotify with love <3 from Aniki! ;)')
         for cur_track in track_slice:
             artist_list = []
             for artist in cur_track.track.artists:
