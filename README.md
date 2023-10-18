@@ -1,8 +1,6 @@
 # PyByeSpotify
 
-### Bulk Export your public Spotify playlists to CSV files. 
-
-Well, eventually. Right now we're just writing to the terminal. 
+### Bulk Export your public Spotify playlists to ~~CSV files~~ the terminal and Youtube Music. 
 
 You need to create a Spotify Developer account to get access to your Client ID and Client Secret from the Web API.
 
@@ -18,9 +16,14 @@ You need to create a Spotify Developer account to get access to your Client ID a
 * CLIENT_SECRET
 * USER_ID -- _Username whose playlist you wish to extract._
 
+#### Generate a oauth.json for Youtube Music
+
+Follow the instructions for [ytmusicapi](https://ytmusicapi.readthedocs.io/en/stable/index.html) to setup your oauth.json file.
+You can find that [here](https://ytmusicapi.readthedocs.io/en/stable/setup/oauth.html).
+
 #### To export and run
 ```bash 
-Linux_Shell$ export CLIENT_ID="XXXXX"; export CLIENT_SECRET="YYYYY"; export USER_ID="ZZZZZ"; ./main.py
+$ export CLIENT_ID="XXXXX"; export CLIENT_SECRET="YYYYY"; ./main.py
 ```
 ----
 Apache 2.0

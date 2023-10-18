@@ -35,6 +35,8 @@ def main():
     print(f"\nPlaylists for user: {user_name}\n---")
     playlists = []
     user_playlists = get_playlists_recursive(50, 0, user, playlists)
+    if start_position > 0:
+        user_playlists = user_playlists[start_position:]
     for pl_item in user_playlists:
         track_slice = []
         track_count = pl_item.tracks.total
