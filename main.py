@@ -28,18 +28,20 @@ def get_tracks_recursive(count, reps, user, playlist_id, track_slice):
 def main():
     spotify_user = input("Enter Username: ")
     start_position = int(input("Enter start position[0]: " or 0))
+    google_import_bool = bool(input("Run import into Youtube Music[no]?: ") or False)
     user = LoginClass(user_name=f"{spotify_user}")
     yt = YTMusic('oauth.json')
     user_name = user.user_class.display_name
     print(f"\nPlaylists for user: {user_name}\n---")
     playlists = []
     user_playlists = get_playlists_recursive(50, 0, user, playlists)
-    for pl_item in user_playlists[start_position:]:
+    for pl_item in user_playlists:
         track_slice = []
         track_count = pl_item.tracks.total
         track_slice = get_tracks_recursive(track_count, 0, user, playlist_id=pl_item.id, track_slice=track_slice)
         print(f"\nPlaylist Name: {pl_item.name} -- Track Count: {track_count}\n---")
-        playlistId = yt.create_playlist(f'{pl_item.name}', f'{pl_item.name} Imported from Spotify')
+        if google_import_bool:
+            playlistId = yt.create_playlist(f'{pl_item.name}', f'{pl_item.name} Imported from Spotify')
         for cur_track in track_slice:
             artist_list = []
             for artist in cur_track.track.artists:
@@ -49,10 +51,11 @@ def main():
                   f"{cur_track.track.album.name} - "
                   f"{cur_track.track.album.release_date}")
             search_results = yt.search(f"{artist_list} {cur_track.track.name} {cur_track.track.album.name}")
-            try:
-                yt.add_playlist_items(playlistId, [search_results[0]['videoId']])
-            except KeyError:
-                yt.add_playlist_items(playlistId, [search_results[1]['videoId']])
+            if google_import_bool:
+                try:
+                    yt.add_playlist_items(playlistId, [search_results[0]['videoId']])
+                except KeyError:
+                    yt.add_playlist_items(playlistId, [search_results[1]['videoId']])
             print(search_results)
             sleep(10)
 
