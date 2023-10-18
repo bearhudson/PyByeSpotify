@@ -2,6 +2,8 @@
 
 ### Bulk Export your public Spotify playlists to ~~CSV files~~ the terminal and Youtube Music. 
 
+It's free. Don't complain. 
+
 You need to create a Spotify Developer account to get access to your Client ID and Client Secret from the Web API.
 
 * [Go here](https://developer.spotify.com/dashboard/) to start your developer account creation. 
@@ -16,7 +18,7 @@ You need to create a Spotify Developer account to get access to your Client ID a
 * CLIENT_SECRET
 * USER_ID -- _Username whose playlist you wish to extract._
 
-#### Generate a oauth.json for Youtube Music
+#### Generate an oauth.json file for Youtube Music
 
 Follow the instructions for [ytmusicapi](https://ytmusicapi.readthedocs.io/en/stable/index.html) to setup your oauth.json file.
 You can find that [here](https://ytmusicapi.readthedocs.io/en/stable/setup/oauth.html).
