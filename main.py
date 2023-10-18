@@ -25,10 +25,22 @@ def get_tracks_recursive(count, reps, user, playlist_id, track_slice):
     return track_slice
 
 
+def get_boolean_input(prompt="Run import to Youtube Music [yes/no]: "):
+    while True:
+        user_input = input(prompt).strip().lower()
+        if user_input == "yes":
+            return True
+        elif user_input == "no":
+            return False
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+
+
 def main():
     spotify_user = input("Enter Username: ")
-    start_position = int(input("Enter start position[0]: " or 0))
-    google_import_bool = bool(input("Run import into Youtube Music[no]?: ") or False)
+    start_position = 0
+    start_position = int(input("Enter start position[0]: "))
+    google_import_bool = get_boolean_input()
     user = LoginClass(user_name=f"{spotify_user}")
     yt = YTMusic('oauth.json')
     user_name = user.user_class.display_name
@@ -43,7 +55,9 @@ def main():
         track_slice = get_tracks_recursive(track_count, 0, user, playlist_id=pl_item.id, track_slice=track_slice)
         print(f"\nPlaylist Name: {pl_item.name} -- Track Count: {track_count}\n---")
         if google_import_bool:
-            playlistId = yt.create_playlist(f'{pl_item.name}', f'{pl_item.name} Imported from Spotify')
+            playlistId = yt.create_playlist(
+                f'{pl_item.name}',
+                f'{pl_item.name} Imported from Spotify with love <3 from Aniki! ;)')
         for cur_track in track_slice:
             artist_list = []
             for artist in cur_track.track.artists:
