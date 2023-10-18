@@ -16,7 +16,7 @@ You need to create a Spotify Developer account to get access to your Client ID a
 
 * CLIENT_ID
 * CLIENT_SECRET
-* USER_ID -- _Username whose playlist you wish to extract._
+
 
 #### Generate an oauth.json file for Youtube Music
 
